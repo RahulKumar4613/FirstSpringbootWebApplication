@@ -1,18 +1,16 @@
 package com.codingshuttle.springbootwebApplication.dTO;
 
-import org.springframework.stereotype.Component;
-
 import java.time.LocalDate;
 
 
 public class EmployeeDTO {
 
-      private Long id;
-      private String name;
-      private String email;
-      private int age;
-      private LocalDate dateofjoining;
-      private Boolean isActive;
+    private Long id;
+    private String name;
+    private String email;
+    private int age;
+    private LocalDate dateofjoining;
+    private Boolean isActive;
 
     public EmployeeDTO(Long id, String name, String email, int age, LocalDate dateofjoining, Boolean isActive) {
         this.id = id;
