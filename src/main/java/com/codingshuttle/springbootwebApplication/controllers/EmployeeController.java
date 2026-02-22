@@ -1,41 +1,49 @@
 package com.codingshuttle.springbootwebApplication.controllers;
 
-import com.codingshuttle.springbootwebApplication.dTO.EmployeeDTO;
+import com.codingshuttle.springbootwebApplication.entities.EmployeeEntity;
+import com.codingshuttle.springbootwebApplication.repositories.EmployeeRepository;
 import org.springframework.web.bind.annotation.*;
-import java.time.LocalDate;
+
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/employee")
 public class EmployeeController {
 
-//    @GetMapping(path="/getsecretmessage")
-//    public String getSecretMessage(){
-//        return "secret message: skfvsd32r24@#sdmvd";
-//    }
+   private final EmployeeRepository employeeRepository;
 
-
-    @GetMapping(path="/{employeeID}")
-    public EmployeeDTO getEmployee(@PathVariable("employeeID") Long employeeId){
-
-        return new EmployeeDTO(employeeId,"rahul","rahul@gmail.com",5, LocalDate.of(2026,2,20),true);
+    public EmployeeController(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
     }
 
-    @GetMapping
-    public EmployeeDTO getEmployeeById(@RequestParam(required = false) Long id,String name){
+      @GetMapping(path= "/{EmpID}")
+      public EmployeeEntity getEmployeeById(@PathVariable(name = "EmpID") Long Id){
+           return  employeeRepository.findById(Id).orElse(null);
+      }
 
-        return new EmployeeDTO(id,name,"abc@gmail.com",29,LocalDate.of(2026,2,21),true);
-    }
+      @GetMapping
+      public List<EmployeeEntity> getAllEmployee(){
+          return employeeRepository.findAll();
+      }
 
-    @PostMapping
-    public String createEmployee(){
+      @PostMapping
+      public EmployeeEntity createEmployee(@RequestBody EmployeeEntity inputEmp)
+      {
+           return employeeRepository.save(inputEmp);
+      }
 
-        return "Hello from Post mapping";
-    }
+      @PostMapping("/bulkcreation")
+      public List<EmployeeEntity> createAllEmployee(@RequestBody List<EmployeeEntity> allEmpobj){
 
-    @PutMapping
-    public String UpdateEmployee(){
+              return employeeRepository.saveAll(allEmpobj);
+      }
 
-        return "Hello from Put Mapping";
 
-    }
 }
+
+/*  Note: In controller layer we directly do not connect or use repository interface.
+*  we use EntityService Class for Crud Operation
+* and in controller layer we always deal with dto object either to fetch or create data.
+*  */
