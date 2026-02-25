@@ -2,6 +2,7 @@ package com.codingshuttle.springbootwebApplication.controllers;
 
 import com.codingshuttle.springbootwebApplication.entities.EmployeeEntity;
 import com.codingshuttle.springbootwebApplication.repositories.EmployeeRepository;
+import com.codingshuttle.springbootwebApplication.service.EmployeeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -12,32 +13,32 @@ import java.util.List;
 @RequestMapping(path = "/employee")
 public class EmployeeController {
 
-   private final EmployeeRepository employeeRepository;
+   private final EmployeeService employeeService;
 
-    public EmployeeController(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
-      @GetMapping(path= "/{EmpID}")
+    @GetMapping(path= "/{EmpID}")
       public EmployeeEntity getEmployeeById(@PathVariable(name = "EmpID") Long Id){
-           return  employeeRepository.findById(Id).orElse(null);
+           return  employeeService.getEmployeeById(Id);
       }
 
       @GetMapping
       public List<EmployeeEntity> getAllEmployee(){
-          return employeeRepository.findAll();
+       return employeeService.getAllEmployee();
       }
 
       @PostMapping
       public EmployeeEntity createEmployee(@RequestBody EmployeeEntity inputEmp)
       {
-           return employeeRepository.save(inputEmp);
+           return employeeService.createEmployee(inputEmp);
       }
 
       @PostMapping("/bulkcreation")
       public List<EmployeeEntity> createAllEmployee(@RequestBody List<EmployeeEntity> allEmpobj){
 
-              return employeeRepository.saveAll(allEmpobj);
+              return employeeService.createAllEmployee(allEmpobj);
       }
 
 

@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+#Adding local H2 database data so that it does not show error #
+ # while pushing data to github #
+/data/
+/*.mv.db
