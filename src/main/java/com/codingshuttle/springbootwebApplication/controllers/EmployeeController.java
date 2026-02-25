@@ -1,5 +1,6 @@
 package com.codingshuttle.springbootwebApplication.controllers;
 
+import com.codingshuttle.springbootwebApplication.dTO.EmployeeDTO;
 import com.codingshuttle.springbootwebApplication.entities.EmployeeEntity;
 import com.codingshuttle.springbootwebApplication.repositories.EmployeeRepository;
 import com.codingshuttle.springbootwebApplication.service.EmployeeService;
@@ -20,7 +21,7 @@ public class EmployeeController {
     }
 
     @GetMapping(path= "/{EmpID}")
-      public EmployeeEntity getEmployeeById(@PathVariable(name = "EmpID") Long Id){
+      public EmployeeDTO getEmployeeById(@PathVariable(name = "EmpID") Long Id){
            return  employeeService.getEmployeeById(Id);
       }
 
